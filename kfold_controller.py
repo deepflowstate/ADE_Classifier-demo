@@ -9,14 +9,13 @@ from sklearn.metrics import classification_report, f1_score, accuracy_score, pre
 from BERTmodel import get_model, get_tokenizer, tokenize_for_classification
 
 def main(data_path = None):
-    
-    
+      
     if data_path is None:
         base_dir = os.path.dirname(__file__)
         data_path = os.path.join(base_dir, 'data_sets', 'ade_corpus_dataset', 'ade_corpus_classification.csv')
     
     # load the dataset 
-    df = pd.read_csv(data_path)
+    df = pd.read_csv(data_path) 
     # Just for testing we train the model just on 200 examples and not the whole dataset
     df = df.sample(n=50, random_state=42).reset_index(drop=True)
     
@@ -26,8 +25,7 @@ def main(data_path = None):
     {"learning_rate": 2e-5, "weight_decay": 0.0, "batch_size": 8},
     ]
     
-    target_names = ["not-related", "related"]
-    
+    target_names = ["not-related", "related"] 
     all_results = []
     
     # Converting the two columns 
@@ -39,7 +37,8 @@ def main(data_path = None):
     # Stratified 5-fold cross-validation 
     kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=42)
     stratify_labels = [lb for lb in labels]
-
+    
+    
     for fold, (train_idx, val_idx) in enumerate(kf.split(texts, stratify_labels)):
         print(f"\n--- Fold {fold + 1} ---")
 
